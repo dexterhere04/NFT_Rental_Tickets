@@ -1,27 +1,42 @@
-import { ethers } from "hardhat";
+import hre from "hardhat";
 
 async function main() {
-  // Get the deployer account
-  const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with:", deployer.address);
+  console.log("Starting deployment...");
+  console.log("Network:", hre.network.name);
 
-  // Optional: check balance
-  const balance = await deployer.provider.getBalance(deployer.address);
-  console.log("Deployer balance:", ethers.formatEther(balance), "ETH");
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying with account:", deployer.address);
+
+  const balance = await hre.ethers.provider.getBalance(deployer.address);
+  console.log("Account balance:", hre.ethers.formatEther(balance), "ETH");
 
   // Deploy RentableNFTMarketplace
-  const feeRecipient = deployer.address; // change if different fee recipient
-  const feeBps = 250; // 2.5%
-
-  const Marketplace = await ethers.getContractFactory("RentableNFTMarketplace");
-  const marketplace = await Marketplace.deploy(feeRecipient, feeBps);
-
+  console.log("\nDeploying RentableNFTMarketplace...");
+  
+  const RentableNFTMarketplace = await hre.ethers.getContractFactory("RentableNFTMarketplace");
+  const marketplace = await RentableNFTMarketplace.deploy("Rentable NFT Collection", "RNFT");
+  
   await marketplace.waitForDeployment();
+  const address = await marketplace.getAddress();
+  
+  console.log("✅ RentableNFTMarketplace deployed to:", address);
+  console.log("Transaction hash:", marketplace.deploymentTransaction()?.hash);
 
-  console.log("RentableNFTMarketplace deployed to:", await marketplace.getAddress());
+  // Verify ERC-4907 support
+  try {
+    const supportsERC4907 = await marketplace.supportsInterface("0xad092b5c");
+    console.log("Supports ERC-4907:", supportsERC4907);
+  } catch (error) {
+    console.log("Could not verify ERC-4907 support");
+  }
+
+  console.log("\nDeployment completed successfully! 🎉");
+  return marketplace;
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Deployment failed:", error);
+    process.exit(1);
+  });
