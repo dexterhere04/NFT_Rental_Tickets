@@ -7,3 +7,11 @@ export default buildModule("MarketplaceModule", (m) => {
   const marketplace = m.contract("RentableNFTMarketplace", [feeRecipient, feeBps]);
   return { marketplace };
 });
+
+// import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+
+// export default buildModule("Marketplace", (m) => {
+//   const feeRecipient = m.getAccount(0);
+//   const marketplace = m.contract("RentableNFTMarketplace", [feeRecipient, 250]); // 2.5% fee
+//   return { marketplace };
+// });
