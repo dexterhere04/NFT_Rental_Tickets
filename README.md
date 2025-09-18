@@ -1,3 +1,5 @@
 Build for Neural Dao Hackathon
 
-* Build a Dao
+* [ ] Build a nft marketplace
+* [ ] make it rentable
+* [ ] implement Event pass specific features
