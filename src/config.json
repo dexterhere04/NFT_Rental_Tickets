@@ -1,7 +1,12 @@
 {
-    "31337": {
-        "TokenMaster": {
-            "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-        }
+  "31337": {
+    "TokenMaster": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
     }
+  },
+  "11155111": {
+    "TokenMaster": {
+      "address": "0xE19626E7E8449adE9002659F0f91A12a7CDBAc2d"
+    }
+  }
 }

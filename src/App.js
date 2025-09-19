@@ -28,7 +28,18 @@ function App() {
     setProvider(provider)
 
     const network = await provider.getNetwork()
-    const tokenMaster = new ethers.Contract(config[network.chainId].TokenMaster.address, TokenMaster, provider)
+    const networkId = network.chainId
+
+    if (!config[networkId]) {
+      console.error("TokenMaster contract not deployed on this network:", networkId)
+      return
+    }
+
+    const tokenMaster = new ethers.Contract(
+      config[networkId].TokenMaster.address,
+      TokenMaster,
+      provider
+    )
     setTokenMaster(tokenMaster)
 
     const totalOccasions = await tokenMaster.totalOccasions()

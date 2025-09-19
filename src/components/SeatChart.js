@@ -26,8 +26,10 @@ const SeatChart = ({ occasion, tokenMaster, provider, setToggle }) => {
   }
 
   useEffect(() => {
-    getSeatsTaken()
-  }, [hasSold])
+  getSeatsTaken()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [hasSold])
+
 
   return (
     <div className="occasion">

@@ -2,10 +2,18 @@ import { ethers } from 'ethers'
 
 const Navigation = ({ account, setAccount }) => {
   const connectHandler = async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const account = ethers.utils.getAddress(accounts[0])
-    setAccount(account)
+  if (window.ethereum) {
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const account = ethers.utils.getAddress(accounts[0])
+      setAccount(account)
+    } catch (err) {
+      console.error("User rejected or error:", err)
+    }
+  } else {
+    alert("Please install MetaMask to connect your wallet.")
   }
+}
 
   return (
     <nav>
