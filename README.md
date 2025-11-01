@@ -19,7 +19,7 @@
 ### 2. Install Dependencies:
 `$ npm install`
 
-### 3. Run tests
+### 3. Run tests:
 `$ npx hardhat test`
 
 ### 4. Start Hardhat node
